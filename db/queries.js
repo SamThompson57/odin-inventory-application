@@ -39,9 +39,22 @@ async function editItemSet(newSetName, setID){
 }
 
 //Delete item Set + all items from the set
+async function deleteItemSet(setID) {
+    await pool.query("DELETE FROM itemsets WHERE setid=$1", [setID])
+    await pool.query("DELETE FROM itemlist WHERE setid=$1", [setID])
+    await pool.query("DELETE FROM inventory WHERE setid=$1", [setID])
+}
 
 //Get all items by set
+async function getItemsInSet(setID) {
+    const { rows } = await pool.query("SELECT * FROM itemlist WHERE setid=$1", [setID])
+}
+
 //New item to set
+async function newItemIntoSet(setID, itemName, itemType, itemDescription, itemWeight) {
+    await pool.query("INSERT INTO itemlist (setid, itemname, itemtype, itemdescription, itemweight) VALUES ($1, $2, $3, $4, $5", [setID, itemName, itemType, itemDescription, itemWeight])
+}
+
 //edit item
 //delete item
 
