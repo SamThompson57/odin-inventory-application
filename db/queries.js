@@ -52,13 +52,31 @@ async function getItemsInSet(setID) {
 
 //New item to set
 async function newItemIntoSet(setID, itemName, itemType, itemDescription, itemWeight) {
-    await pool.query("INSERT INTO itemlist (setid, itemname, itemtype, itemdescription, itemweight) VALUES ($1, $2, $3, $4, $5", [setID, itemName, itemType, itemDescription, itemWeight])
+    await pool.query("INSERT INTO itemlist (setid, itemname, itemtype, itemdescription, itemweight) VALUES ($1, $2, $3, $4, $5", 
+        [setID, itemName, itemType, itemDescription, itemWeight])
 }
 
 //edit item
+async function editItemDetail(itemID, setID, itemName, itemType, itemDescription, itemWeight) {
+    await pool.query("UPDATE itemlist SET setid=$2, itemname=$3, itemtype=$4, itemdescription=$5, itemweight=$6 WHERE itemid=$1", 
+        [itemID, setID, itemName, itemType, itemDescription, itemWeight])
+}
+
+//mass edit item
+async function massEditItemDetail(itemArray) {
+    await itemArray.forEach(element => {
+        editItemDetail(element.itemID, element.setID, element.itemName, element.itemType, element.itemDescription, element.itemWeight)
+    });
+}
+
 //delete item
+async function deleteItem(itemID) {
+    await pool.query("DELETE FROM itemlist WHERE itemid=$1", [itemID])
+}
 
-
+async function getInventorybyCharacter(characterID) {
+    await pool.query("SELECT * FROM inventory WHERE characterid=$1", [characterID])
+}
 //get inventory lines by character
 //add lines to inventory
 //edit inventory line
@@ -68,5 +86,15 @@ module.exports = {
     getAllCharacters,
     insertCharacter,
     editCharacter,
-    deleteCharacter
+    deleteCharacter,
+    getAllItemSets,
+    addNewItemSet,
+    editItemSet,
+    deleteItemSet,
+    getItemsInSet,
+    newItemIntoSet,
+    editItemDetail,
+    massEditItemDetail,
+    deleteItem,
+    getInventorybyCharacter
 }
