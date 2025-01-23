@@ -52,7 +52,7 @@ async function getItemsInSet(setID) {
 
 //New item to set
 async function newItemIntoSet(setID, itemName, itemType, itemDescription, itemWeight) {
-    await pool.query("INSERT INTO itemlist (setid, itemname, itemtype, itemdescription, itemweight) VALUES ($1, $2, $3, $4, $5", 
+    await pool.query("INSERT INTO itemlist (setid, itemname, itemtype, itemdescription, itemweight) VALUES ($1, $2, $3, $4, $5)", 
         [setID, itemName, itemType, itemDescription, itemWeight])
 }
 
@@ -74,11 +74,18 @@ async function deleteItem(itemID) {
     await pool.query("DELETE FROM itemlist WHERE itemid=$1", [itemID])
 }
 
+//get inventory lines by character
 async function getInventorybyCharacter(characterID) {
     await pool.query("SELECT * FROM inventory WHERE characterid=$1", [characterID])
 }
-//get inventory lines by character
+
 //add lines to inventory
+async function addInventoryLine(setID, itemID, quantity, characterID) {
+    await pool.query("INSERT INTO inventory (setid, itemid, quantity, characterid) VALUES ($1, $2, $3, $4)", 
+        [setID, itemID, quantity, characterID])
+    
+}
+
 //edit inventory line
 //delete inventory line
 
@@ -96,5 +103,6 @@ module.exports = {
     editItemDetail,
     massEditItemDetail,
     deleteItem,
-    getInventorybyCharacter
+    getInventorybyCharacter,
+    addInventoryLine
 }
