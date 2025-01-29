@@ -87,7 +87,16 @@ async function addInventoryLine(setID, itemID, quantity, characterID) {
 }
 
 //edit inventory line
+async function editInventoryLine(id, quantity, characterID) {
+    await pool.query("UPDATE inventory SET quantity=$2, characterid=$3 WHERE id=$1", 
+        [id, quantity, characterID])    
+}
+
 //delete inventory line
+async function deleteInventoryLine(id) {
+    await pool.query("DELETE FROM inventory WHERE id=$1", [id])
+}
+
 
 module.exports = {
     getAllCharacters,
@@ -104,5 +113,7 @@ module.exports = {
     massEditItemDetail,
     deleteItem,
     getInventorybyCharacter,
-    addInventoryLine
+    addInventoryLine,
+    editInventoryLine,
+    deleteInventoryLine
 }
