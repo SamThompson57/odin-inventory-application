@@ -7,8 +7,8 @@
         <h1><%= title %></h1>
         <ul>
             <% if (locals.characters){%>
-                <% users.forEach(function(character){ %>
-                <li><%character.id%>: <%character.charactername%></li>
+                <% characters.forEach(function(character){ %>
+                <li><%=character.charactername%> - STRENGTH: <%=character.str%></li>
                 <%}); %>
             <% } %>        
         </ul>

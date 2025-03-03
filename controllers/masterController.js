@@ -3,8 +3,6 @@ const db = require("../db/queries");
 //Get Character List
 async function characterListGet(req, res) {
     const characters = await db.getAllCharacters();
-    res.send("Characters:" + characters.map(character => character.charactername))
-
     res.render("characterList", {
         title: "Character List",
         characters: characters
@@ -23,6 +21,7 @@ async function newCharacterGet(req, res) {
 async function newCharacterPost(req, res) {
     const name = req.body.characterName;
     const str = req.body.characterStr;
+    console.log(`New Character: ${name}, Strength score: ${str}`)
     await db.insertCharacter(name,str);
     res.redirect("/");
 }
@@ -30,5 +29,7 @@ async function newCharacterPost(req, res) {
 //Delete User
 
 module.exports = {
-    characterListGet
+    characterListGet,
+    newCharacterGet,
+    newCharacterPost
 }

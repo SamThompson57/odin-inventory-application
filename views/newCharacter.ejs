@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+<body>
+  <h1><%= title %></h1>
+  
+  <form action="/new" method="POST">
+    <label for="characterName">Character Name: </label>
+    <input type="text" name="characterName" id="characterName" required minlength="3" maxlength="20">
+    <label for="characterStr"> Strength Score: </label>
+    <input type="number" name="characterStr" id="characterStr" required min="1" max="35">
+    <button type="submit">Submit</button>
+  </form>
+  <a href="/">Back to home</a>
+</body>
+</html>

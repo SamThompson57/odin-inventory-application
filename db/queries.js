@@ -7,8 +7,8 @@ async function getAllCharacters() {
 }
 
 //Add a new character
-async function insertCharacter(characterName, str) {
-    await pool.query("INSERT INTO characters (charactername, str) VALUES ($1,$2)", [characterName, str] )    
+async function insertCharacter(charactername, str) {
+    await pool.query("INSERT INTO characters (charactername, str) VALUES ($1, $2)", [charactername, str] )    
 }
 
 //Ammend a characters stats
