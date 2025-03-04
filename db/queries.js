@@ -8,7 +8,13 @@ async function getAllCharacters() {
 
 //Add a new character
 async function insertCharacter(charactername, str) {
-    await pool.query("INSERT INTO characters (charactername, str) VALUES ($1, $2)", [charactername, str] )    
+    await pool.query("INSERT INTO characters (charactername, str) VALUES ($1, $2)", [charactername, str]);    
+}
+
+//Get Character by ID
+async function getCharacterById(characterid) {
+    const {rows} = await pool.query("SELECT * FROM characters WHERE characterid=$1", [characterid]);
+    return rows[0];
 }
 
 //Ammend a characters stats
@@ -101,6 +107,7 @@ async function deleteInventoryLine(id) {
 module.exports = {
     getAllCharacters,
     insertCharacter,
+    getCharacterById,
     editCharacter,
     deleteCharacter,
     getAllItemSets,

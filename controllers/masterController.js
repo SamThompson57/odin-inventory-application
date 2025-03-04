@@ -33,9 +33,28 @@ async function deleteCharacterPost(req, res) {
     res.redirect("/")
 }
 
+//Update Character Get
+async function updateCharacterGet(req, res) {
+    const character = await db.getCharacterById(req.params.id)
+    console.log(character)
+    res.render("updateCharacter", {
+        title: "Update Character",
+        character: character
+    })
+}
+
+//Update Character Post
+async function updateCharacterPost(req, res) {
+    const { characterName, characterStr } = req.body;
+    await db.editCharacter(req.params.id, characterName, characterStr)
+    res.redirect("/")
+}
+
 module.exports = {
     characterListGet,
     newCharacterGet,
     newCharacterPost,
-    deleteCharacterPost
+    deleteCharacterPost,
+    updateCharacterGet,
+    updateCharacterPost
 }
