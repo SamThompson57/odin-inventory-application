@@ -26,10 +26,16 @@ async function newCharacterPost(req, res) {
     res.redirect("/");
 }
 
-//Delete User
+//Delete Character
+async function deleteCharacterPost(req, res) {
+    console.log("Deleting Character with ID: "+req.params.id)
+    await db.deleteCharacter(req.params.id)
+    res.redirect("/")
+}
 
 module.exports = {
     characterListGet,
     newCharacterGet,
-    newCharacterPost
+    newCharacterPost,
+    deleteCharacterPost
 }
