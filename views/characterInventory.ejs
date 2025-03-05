@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%=character.charactername%>'s Inventory</title>
+    </head>
+    <body>
+        <h1><%=character.charactername%>'s Inventory</h1>
+        <ul>
+            <% if (locals.inventory){%>
+                <Table>
+                    <thead>
+                        <th scope="col">ITEM</th>
+                        <th scope="col">TYPE</th>
+                        <th scope="col">DESCRIPTION</th>
+                        <th scope="col">WEIGHT</th>
+                        <th scope="col">QUANTITY</th>
+                        <th scope="col">SUB-TOTAL</th>
+                    </thead>
+                    <tbody>
+                        <% inventory.forEach(function(item){ %>
+                            <th scope="row"><%=item.itemname%></th>
+                            <td><%=item.itemtype%></td>
+                            <td><%=item.itemdescription%></td>
+                            <td><%=item.weight%></td>
+                            <td><%=item.quantity%></td>
+                            <td><%=item.weight * item.quantity%></td>
+                        <%}); %>
+                    </tbody>
+                    
+                </Table>
+                
+            <% } %>        
+        </ul>
+        <a href="/new">NEW CHARACTER</a>
+    </body>
+</html>
