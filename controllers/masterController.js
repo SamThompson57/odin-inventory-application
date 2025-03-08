@@ -50,11 +50,22 @@ async function updateCharacterPost(req, res) {
     res.redirect("/")
 }
 
+//Get a characters itemlist.
+async function getItemList(req, res) {
+    const character = await db.getCharacterById(req.params.id)
+    const items = await db.getInventorybyCharacter(req.params.id)
+    res.render("characterInventory",{
+        character: character,
+        items: items
+    })
+}
+
 module.exports = {
     characterListGet,
     newCharacterGet,
     newCharacterPost,
     deleteCharacterPost,
     updateCharacterGet,
-    updateCharacterPost
+    updateCharacterPost,
+    getItemList
 }

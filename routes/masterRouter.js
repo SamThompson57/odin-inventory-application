@@ -8,5 +8,6 @@ masterRouter.post("/new", masterController.newCharacterPost);
 masterRouter.post("/:id/delete", masterController.deleteCharacterPost);
 masterRouter.get("/:id/update", masterController.updateCharacterGet);
 masterRouter.post("/:id/update", masterController.updateCharacterPost);
+masterRouter.get("/:id/inventory", masterController.getItemList);
 
 module.exports = masterRouter

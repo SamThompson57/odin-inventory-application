@@ -6,7 +6,7 @@
     <body>
         <h1><%=character.charactername%>'s Inventory</h1>
         <ul>
-            <% if (locals.inventory){%>
+            <% if (locals.items){%>
                 <Table>
                     <thead>
                         <th scope="col">ITEM</th>
@@ -17,7 +17,7 @@
                         <th scope="col">SUB-TOTAL</th>
                     </thead>
                     <tbody>
-                        <% inventory.forEach(function(item){ %>
+                        <% items.forEach(function(item){ %>
                             <th scope="row"><%=item.itemname%></th>
                             <td><%=item.itemtype%></td>
                             <td><%=item.itemdescription%></td>

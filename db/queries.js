@@ -82,7 +82,8 @@ async function deleteItem(itemID) {
 
 //get inventory lines by character
 async function getInventorybyCharacter(characterID) {
-    await pool.query("SELECT * FROM inventory WHERE characterid=$1", [characterID])
+    const { rows } = await pool.query("SELECT inventory.id, inventory.itemid, itemlist.itemname, itemlist.itemtype, itemlist.itemdescription, itemlist.weight, inventory.quantity FROM inventory INNER JOIN itemlist ON inventory.itemid=itemlist.itemid WHERE inventory.characterid = $1", [characterID])
+    return rows
 }
 
 //add lines to inventory
