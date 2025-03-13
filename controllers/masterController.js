@@ -36,7 +36,6 @@ async function deleteCharacterPost(req, res) {
 //Update Character Get
 async function updateCharacterGet(req, res) {
     const character = await db.getCharacterById(req.params.id)
-    console.log(character)
     res.render("updateCharacter", {
         title: "Update Character",
         character: character
@@ -68,6 +67,44 @@ async function getSetList(req, res) {
     })
 }
 
+// New Set Get
+async function newSetGet(req, res) {
+    res.render("newSet", {
+        title: "New Item Set"
+    });
+
+}
+
+// New Set Post
+async function newSetPost(req, res) {
+    const setName = req.body.setName;
+    await db.addNewItemSet(setName)
+    res.redirect("/itemSets")
+}
+
+// Update Set Get
+async function updateSetGet(req, res) {
+    const set = await db.getSetById(req.params.id)
+    res.render("updateSet", {
+        title: "Update Set",
+        set: set
+    })
+}
+
+// Update Set Post
+async function updateSetPost(req, res) {
+    const {setName} = req.body;
+    await db.editItemSet(setName)
+    res.redirect("/itemsets")
+}
+
+// Delete Set
+async function deleteItemSet(req, res) {
+    console.log("Deleting Item Set")
+    await db.deleteItemSet(req.params.id)
+    res.redirect("/itemsets")
+}
+
 module.exports = {
     characterListGet,
     newCharacterGet,
@@ -76,5 +113,10 @@ module.exports = {
     updateCharacterGet,
     updateCharacterPost,
     getItemList,
-    getSetList
+    getSetList,
+    newSetGet,
+    newSetPost,
+    updateSetGet,
+    updateSetPost,
+    deleteItemSet
 }

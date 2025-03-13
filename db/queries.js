@@ -34,6 +34,11 @@ async function getAllItemSets() {
     return rows
 }
 
+async function getSetById(setID) {
+    const {rows} = await pool.query("SELECT * FROM itemsets WHERE setid=$1", [setID])
+    return rows[0]
+}
+
 //New Item Set
 async function addNewItemSet(setName) {
     await pool.query("INSERT INTO itemsets (setname) VALUES ($1)", [setName])
@@ -123,5 +128,6 @@ module.exports = {
     getInventorybyCharacter,
     addInventoryLine,
     editInventoryLine,
-    deleteInventoryLine
+    deleteInventoryLine,
+    getSetById
 }

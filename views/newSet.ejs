@@ -6,9 +6,9 @@
 <body>
   <h1><%= title %></h1>
   
-  <form action="/<%= set.setid %>/updateset" method="POST">
+  <form action="/newset" method="POST">
     <label for="setName">Set Name: </label>
-    <input type="text" name="setName" id="setName" required minlength="3" maxlength="30" value="<%= set.setname%>">
+    <input type="text" name="setName" id="setName" required minlength="3" maxlength="30">
     <button type="submit">Submit</button>
   </form>
   <a href="/itemsets">Back to item sets</a>
