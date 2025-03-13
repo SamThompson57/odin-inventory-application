@@ -9,5 +9,6 @@ masterRouter.post("/:id/delete", masterController.deleteCharacterPost);
 masterRouter.get("/:id/update", masterController.updateCharacterGet);
 masterRouter.post("/:id/update", masterController.updateCharacterPost);
 masterRouter.get("/:id/inventory", masterController.getItemList);
+masterRouter.get("/itemsets", masterController.getSetList);
 
 module.exports = masterRouter

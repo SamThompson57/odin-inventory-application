@@ -60,6 +60,14 @@ async function getItemList(req, res) {
     })
 }
 
+//Get Setlist
+async function getSetList(req, res) {
+    const itemSets = await db.getAllItemSets();
+    res.render("itemSets", {
+        itemsets: itemSets
+    })
+}
+
 module.exports = {
     characterListGet,
     newCharacterGet,
@@ -67,5 +75,6 @@ module.exports = {
     deleteCharacterPost,
     updateCharacterGet,
     updateCharacterPost,
-    getItemList
+    getItemList,
+    getSetList
 }
