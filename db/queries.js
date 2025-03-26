@@ -59,6 +59,7 @@ async function deleteItemSet(setID) {
 //Get all items by set
 async function getItemsInSet(setID) {
     const { rows } = await pool.query("SELECT * FROM itemlist WHERE setid=$1", [setID])
+    return rows;
 }
 
 //New item to set

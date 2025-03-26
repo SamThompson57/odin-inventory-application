@@ -85,7 +85,7 @@ async function newSetPost(req, res) {
 // Update Set Get
 async function updateSetGet(req, res) {
     const set = await db.getSetById(req.params.id)
-    res.render("updateSet", {
+    res.render("updateItemSet", {
         title: "Update Set",
         set: set
     })
@@ -94,7 +94,7 @@ async function updateSetGet(req, res) {
 // Update Set Post
 async function updateSetPost(req, res) {
     const {setName} = req.body;
-    await db.editItemSet(setName)
+    await db.editItemSet(setName, req.params.id)
     res.redirect("/itemsets")
 }
 
@@ -103,6 +103,16 @@ async function deleteItemSet(req, res) {
     console.log("Deleting Item Set")
     await db.deleteItemSet(req.params.id)
     res.redirect("/itemsets")
+}
+
+// Get Items from set
+async function getItemsInSet(req, res) {
+    const set = await db.getSetById(req.params.id)
+    const items = await db.getItemsInSet(req.params.id)
+    res.render("setDetail", {
+        set: set,
+        items: items
+    })
 }
 
 module.exports = {
@@ -118,5 +128,6 @@ module.exports = {
     newSetPost,
     updateSetGet,
     updateSetPost,
-    deleteItemSet
+    deleteItemSet,
+    getItemsInSet
 }

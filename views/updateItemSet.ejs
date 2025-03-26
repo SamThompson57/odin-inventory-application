@@ -6,7 +6,7 @@
 <body>
   <h1><%= title %></h1>
   
-  <form action="/<%= set.setid %>/updateset" method="POST">
+  <form action="/<%= set.setid %>/edit" method="POST">
     <label for="setName">Set Name: </label>
     <input type="text" name="setName" id="setName" required minlength="3" maxlength="30" value="<%= set.setname%>">
     <button type="submit">Submit</button>
