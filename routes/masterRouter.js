@@ -16,5 +16,7 @@ masterRouter.get("/:id/edit", masterController.updateSetGet);
 masterRouter.post("/:id/edit", masterController.updateSetPost);
 masterRouter.post("/:id/setdelete", masterController.deleteItemSet);
 masterRouter.get("/:id/itemlist", masterController.getItemsInSet);
+masterRouter.get("/:id/additem", masterController.addItemGet);
+masterRouter.post("/:id/additem", masterController.addItemPost)
 
 module.exports = masterRouter

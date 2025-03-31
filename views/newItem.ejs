@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Item</title>
+  </head>
+<body>
+  <h1>New item for Set: <%=set.setname%> </h1>
+  
+  <form action="/<%=set.setid%>/additem" method="POST">
+    <label for="itemName">Item Name: </label>
+    <input type="text" name="itemName" id="itemName" required minlength="3" maxlength="20"/>
+    <label for="itemType"> Item Type: </label>
+    <input list="itemTypes" name="itemType" id="itemType" required minlength="3"/>
+    <datalist id="itemTypes">
+        <% if (locals.itemtypes){%>
+            <%itemtypes.forEach(function(type){ %>
+            <option value="<%=type.itemtype%>"></option>
+            <% }) %>;
+        <% } %> 
+    </datalist>
+    <label for="itemDescription">Description</label>
+    <input type="text" name="itemDescription" id="itemDescription" maxlength="100">
+    <label for="itemWeight">Item Weight</label>
+    <input type="number" name="itemWeight" id="itemWeight" min="0">
+    <button type="submit">Submit</button>
+  </form>
+  <a href="/<%=set.setid%>/itemlist">Back to Set list </a>
+</body>
+</html>

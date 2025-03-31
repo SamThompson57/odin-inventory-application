@@ -115,6 +115,26 @@ async function getItemsInSet(req, res) {
     })
 }
 
+//Add Item Get
+async function addItemGet(req, res) {
+    const set = await db.getSetById(req.params.id);
+    const uniqueTypes = await db.getItemTypesInSet(req.params.id)
+    res.render("newItem", {
+        set: set,
+        itemtypes: uniqueTypes
+    })
+}
+
+//Add Item Post
+async function addItemPost(req, res) {
+    const itemName = req.body.itemName;
+    const itemType = req.body.itemType;
+    const itemDescription = req.body.itemDescription;
+    const itemWeight = req.body.itemWeight;
+    await db.newItemIntoSet(req.params.id, itemName, itemType, itemDescription, itemWeight)
+    res.redirect(`/${req.params.id}/itemlist`)
+}
+
 module.exports = {
     characterListGet,
     newCharacterGet,
@@ -129,5 +149,7 @@ module.exports = {
     updateSetGet,
     updateSetPost,
     deleteItemSet,
-    getItemsInSet
+    getItemsInSet,
+    addItemGet,
+    addItemPost
 }

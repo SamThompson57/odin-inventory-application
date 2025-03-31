@@ -64,7 +64,7 @@ async function getItemsInSet(setID) {
 
 //New item to set
 async function newItemIntoSet(setID, itemName, itemType, itemDescription, itemWeight) {
-    await pool.query("INSERT INTO itemlist (setid, itemname, itemtype, itemdescription, itemweight) VALUES ($1, $2, $3, $4, $5)", 
+    await pool.query("INSERT INTO itemlist (setid, itemname, itemtype, itemdescription, weight) VALUES ($1, $2, $3, $4, $5)", 
         [setID, itemName, itemType, itemDescription, itemWeight])
 }
 
@@ -110,6 +110,11 @@ async function deleteInventoryLine(id) {
     await pool.query("DELETE FROM inventory WHERE id=$1", [id])
 }
 
+async function getItemTypesInSet(id) {
+    const { rows } = await pool.query("SELECT DISTINCT itemtype FROM itemlist WHERE setid=$1", [id] );
+    return rows
+}
+
 
 module.exports = {
     getAllCharacters,
@@ -130,5 +135,6 @@ module.exports = {
     addInventoryLine,
     editInventoryLine,
     deleteInventoryLine,
-    getSetById
+    getSetById,
+    getItemTypesInSet
 }
