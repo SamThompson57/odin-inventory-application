@@ -68,13 +68,19 @@ async function newItemIntoSet(setID, itemName, itemType, itemDescription, itemWe
         [setID, itemName, itemType, itemDescription, itemWeight])
 }
 
+//get item
+async function getItemById(itemID) {
+    const { rows } = await pool.query("SELECT * FROM itemlist WHERE itemid=$1", [itemID])
+    return rows;
+}
+
 //edit item
 async function editItemDetail(itemID, setID, itemName, itemType, itemDescription, itemWeight) {
     await pool.query("UPDATE itemlist SET setid=$2, itemname=$3, itemtype=$4, itemdescription=$5, itemweight=$6 WHERE itemid=$1", 
         [itemID, setID, itemName, itemType, itemDescription, itemWeight])
 }
 
-//mass edit item
+//mass edit item - NOT SURE IF NEEDED
 async function massEditItemDetail(itemArray) {
     await itemArray.forEach(element => {
         editItemDetail(element.itemID, element.setID, element.itemName, element.itemType, element.itemDescription, element.itemWeight)
@@ -136,5 +142,6 @@ module.exports = {
     editInventoryLine,
     deleteInventoryLine,
     getSetById,
-    getItemTypesInSet
+    getItemTypesInSet,
+    getItemById
 }

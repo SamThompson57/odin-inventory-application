@@ -135,6 +135,40 @@ async function addItemPost(req, res) {
     res.redirect(`/${req.params.id}/itemlist`)
 }
 
+//Edit Item Get
+async function editItemGet(req, res) {
+    const item = await db.getItemById(req.params.itemId)
+    const uniqueTypes = await db.getItemTypesInSet(req.params.setId)
+    const set = await db.getSetById(req.params.setId)
+    res.render("updateItem", {
+        set: set,
+        itemTypes: uniqueTypes,
+        item: item
+    })
+}
+
+//Edit Item Post
+async function editItemPost(req, res) {
+    await db.editItemDetail(
+        req.params.itemId, 
+        req.params.setId, 
+        req.body.itemName, 
+        req.body.itemType, 
+        req.body.itemDescription, 
+        req.params.itemWeight
+    )
+
+    res.redirect(`/${req.params.setId}/itemlist`)
+}
+
+
+//Delete Item
+async function deleteItemPost(req, res) {
+    await db.deleteItem(req.params.itemId);
+    res.redirect(`/${req.params.setId}/itemlist`)
+}
+
+
 module.exports = {
     characterListGet,
     newCharacterGet,
@@ -151,5 +185,8 @@ module.exports = {
     deleteItemSet,
     getItemsInSet,
     addItemGet,
-    addItemPost
+    addItemPost,
+    editItemGet,
+    editItemPost,
+    deleteItemPost
 }
