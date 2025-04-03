@@ -137,35 +137,36 @@ async function addItemPost(req, res) {
 
 //Edit Item Get
 async function editItemGet(req, res) {
-    const item = await db.getItemById(req.params.itemId)
-    const uniqueTypes = await db.getItemTypesInSet(req.params.setId)
-    const set = await db.getSetById(req.params.setId)
+    console.log(`Set ID:${req.params.setid}, Item ID:${req.params.itemid}` )
+    const item = await db.getItemById(req.params.itemid)
+    const uniqueTypes = await db.getItemTypesInSet(req.params.setid)
+    const set = await db.getSetById(req.params.setid)
     res.render("updateItem", {
         set: set,
         itemTypes: uniqueTypes,
-        item: item
+        item: item[0]
     })
 }
 
 //Edit Item Post
 async function editItemPost(req, res) {
     await db.editItemDetail(
-        req.params.itemId, 
-        req.params.setId, 
+        req.params.itemid, 
+        req.params.setid, 
         req.body.itemName, 
         req.body.itemType, 
         req.body.itemDescription, 
         req.params.itemWeight
     )
 
-    res.redirect(`/${req.params.setId}/itemlist`)
+    res.redirect(`/${req.params.setid}/itemlist`)
 }
 
 
 //Delete Item
 async function deleteItemPost(req, res) {
-    await db.deleteItem(req.params.itemId);
-    res.redirect(`/${req.params.setId}/itemlist`)
+    await db.deleteItem(req.params.itemid);
+    res.redirect(`/${req.params.setid}/itemlist`)
 }
 
 

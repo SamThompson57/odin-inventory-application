@@ -18,8 +18,8 @@ masterRouter.post("/:id/setdelete", masterController.deleteItemSet);
 masterRouter.get("/:id/itemlist", masterController.getItemsInSet);
 masterRouter.get("/:id/additem", masterController.addItemGet);
 masterRouter.post("/:id/additem", masterController.addItemPost)
-masterRouter.get("/:setId/:itemId/itemedit", masterController.editItemGet)
-masterRouter.post("/:setId/:itemId/itemedit", masterController.editItemPost)
-masterRouter.post("/:setId/:itemId/itemdelete", masterController.deleteItemPost)
+masterRouter.get("/:setid/:itemid/itemedit", masterController.editItemGet)
+masterRouter.post("/:setid/:itemid/itemedit", masterController.editItemPost)
+masterRouter.post("/:setid/:itemid/itemdelete", masterController.deleteItemPost)
 
 module.exports = masterRouter
