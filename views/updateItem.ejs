@@ -6,7 +6,7 @@
 <body>
   <h1>Update item</h1>
   
-  <form action="/<%=item.itemid%>/edititem" method="POST">
+  <form action="/<%=set.setid%>/<%=item.itemid%>/itemedit" method="POST">
     <label for="itemName">Item Name: </label>
     <input type="text" name="itemName" id="itemName" value="<%=item.itemname%>" required minlength="3" maxlength="20"/>
     <label for="itemType"> Item Type: </label>
@@ -20,7 +20,7 @@
     </datalist>
     <label for="itemDescription">Description</label>
     <input type="text" name="itemDescription" id="itemDescription" value="<%=item.itemdescription%>" maxlength="100">
-    <label for="itemWeight">Item Weight</label>
+    <label for="itemWeight" required>Item Weight</label>
     <input type="number" name="itemWeight" id="itemWeight" value="<%=item.weight%>" min="0">
     <button type="submit">Submit</button>
   </form>

@@ -149,14 +149,14 @@ async function editItemGet(req, res) {
 }
 
 //Edit Item Post
-async function editItemPost(req, res) {
+async function editItemPost(req, res) {    
     await db.editItemDetail(
         req.params.itemid, 
         req.params.setid, 
         req.body.itemName, 
         req.body.itemType, 
         req.body.itemDescription, 
-        req.params.itemWeight
+        req.body.itemWeight
     )
 
     res.redirect(`/${req.params.setid}/itemlist`)

@@ -76,7 +76,7 @@ async function getItemById(itemID) {
 
 //edit item
 async function editItemDetail(itemID, setID, itemName, itemType, itemDescription, itemWeight) {
-    await pool.query("UPDATE itemlist SET setid=$2, itemname=$3, itemtype=$4, itemdescription=$5, itemweight=$6 WHERE itemid=$1", 
+    await pool.query("UPDATE itemlist SET setid=$2, itemname=$3, itemtype=$4, itemdescription=$5, weight=$6 WHERE itemid=$1", 
         [itemID, setID, itemName, itemType, itemDescription, itemWeight])
 }
 
