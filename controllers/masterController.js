@@ -178,13 +178,7 @@ async function editInventoryGet(req, res) {
     const items = await db.getInventorybyCharacter(req.params.id)
     const itemsets = await db.getAllItemSets();
     // get item list from the search parameters
-    let itemSearch = req.query.set || req.query.search? await db.itemSearch(req.query) : null 
-
-    /*if (req.query.set || req.query.search){
-        itemSearch = await db.itemSearch(req.query)
-    }*/
-
-    
+    let itemSearch = req.query.set || req.query.search? await db.itemSearch(req.query, req.params.id) : null 
     
     res.render("inventoryEdit", {
         title: `Edit ${character.charactername}'s inventory`,
@@ -198,9 +192,6 @@ async function editInventoryGet(req, res) {
 //Edit Inventory POST
 async function editInventoryPost(req, res) {
     console.log("Inventory Updated")
-    Object.keys(req.body).forEach(key => {
-        console.log(`Key: ${key}, Value: ${req.body[key]}`)
-    });
     await db.editInventory(req.body)
     res.redirect(`/${req.params.id}/inventory`)
 }
@@ -208,9 +199,10 @@ async function editInventoryPost(req, res) {
 async function addAddSingleLineToInv(req, res) {
     //Form will be submitted with a single Item ID,
     //Get item getItemById(itemID) 
-    const item = await db.getItemById(Object.keys(req.body)[0])
-    //addInventoryLine(setID, itemID, quantity, characterID)
-    console.log(`adding ${req.body[0]} x ${item.itemname}`)
+    console.log(req.body)
+    console.log(Number(Object.keys(req.body)[0]))
+    const item = await db.getItemById(Number(Object.keys(req.body)[0]))
+    await db.addInventoryLine(item[0].setid, item[0].itemid, req.body[item[0].itemid], req.params.id)
     res.redirect(`/${req.params.id}/editinventory`)
 }
 

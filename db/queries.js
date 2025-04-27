@@ -108,8 +108,15 @@ async function addInventoryLine(setID, itemID, quantity, characterID) {
 //edit inventory TO BE USED AS A MASS EDIT
 async function editInventory( ammendedItems ) {
     Object.keys(ammendedItems).forEach(async function(key){
-        await pool.query("UPDATE inventory SET quantity=$2 WHERE id=$1", 
-            [Number(key), Number(ammendedItems[key])])    
+        if(Number(ammendedItems[key])>0){
+            await pool.query("UPDATE inventory SET quantity=$2 WHERE id=$1", 
+                [Number(key), Number(ammendedItems[key])])
+        }else{
+            await pool.query("DELETE FROM inventory WHERE id=$1",
+                [Number(key)]
+            )
+        }
+    
     })
 }
 
@@ -130,20 +137,18 @@ async function totalInventoryWeight(characterID) {
 }
 
 //Return items in a search query
-async function itemSearch(query) {
+async function itemSearch(query, characterId) {
     const queryArray = []
     if (query.set){queryArray.push(query.set)};
-    if (query.search){queryArray.push('%'+decodeURIComponent(query.search)+'%')}
+    if (query.search){queryArray.push('%'+decodeURIComponent(query.search).toLowerCase()+'%')}
+    queryArray.push(characterId)
     
-    console.log(queryArray)
-
     const { rows } = await pool.query(`SELECT * FROM itemlist WHERE 
         ${query.set?`setid=$1 `:''}
         ${query.set && query.search ? 'AND ':''}
-        ${query.search?`itemname LIKE ${query.set?'$2':'$1'}`:''}`,queryArray)
-    
-    console.log(rows)
-    return rows;
+        ${query.search?`LOWER(itemname) LIKE ${query.set?'$2':'$1'}`:''}
+        AND itemid NOT IN(SELECT itemid FROM inventory WHERE characterid=$${queryArray.length}) LIMIT 25`,queryArray)
+        return rows;
 }
 
 module.exports = {

@@ -25,5 +25,6 @@ masterRouter.get("/:id/editinventory", masterController.editInventoryGet)
 masterRouter.post("/:id/editinventory", masterController.editInventoryPost)
 masterRouter.post("/:id/addIntoInventory", masterController.addAddSingleLineToInv)
 masterRouter.post("/:id/editinventory/search", masterController.newSearch)
+masterRouter.post("/:id/addintoinventory", masterController.addAddSingleLineToInv)
 
 module.exports = masterRouter
