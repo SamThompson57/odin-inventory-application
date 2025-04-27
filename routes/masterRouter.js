@@ -21,5 +21,9 @@ masterRouter.post("/:id/additem", masterController.addItemPost)
 masterRouter.get("/:setid/:itemid/itemedit", masterController.editItemGet)
 masterRouter.post("/:setid/:itemid/itemedit", masterController.editItemPost)
 masterRouter.post("/:setid/:itemid/itemdelete", masterController.deleteItemPost)
+masterRouter.get("/:id/editinventory", masterController.editInventoryGet)
+masterRouter.post("/:id/editinventory", masterController.editInventoryPost)
+masterRouter.post("/:id/addIntoInventory", masterController.addAddSingleLineToInv)
+masterRouter.post("/:id/editinventory/search", masterController.newSearch)
 
 module.exports = masterRouter

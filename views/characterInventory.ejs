@@ -17,17 +17,25 @@
                     </thead>
                     <tbody>
                         <% items.forEach(function(item){ %>
-                            <th scope="row"><%=item.itemname%></th>
-                            <td><%=item.itemtype%></td>
-                            <td><%=item.itemdescription%></td>
-                            <td><%=item.weight%></td>
-                            <td><%=item.quantity%></td>
-                            <td><%=item.weight * item.quantity%></td>
+                            <tr>
+                                <th scope="row"><%=item.itemname%></th>
+                                <td><%=item.itemtype%></td>
+                                <td><%=item.itemdescription%></td>
+                                <td><%=item.weight%>lb</td>
+                                <td><%=item.quantity%></td>
+                                <td><%=item.weight * item.quantity%>lb</td>
+                            </tr>
+
                         <%}); %>
                     </tbody>
-                    
                 </Table>
             <% } %>
+            
+            <a href="/<%=character.characterid%>/editinventory">EDIT ITEMS</a>
+            
+            <br/>
+            <h3>TOTAL Inventory: <%=totalInvWeight.sum%>lb / MAXIMUM: <%=character.str*15%>lb</h3>
+            
             <a href="/">Back to character list </a>
             <a href="/<%= character.characterid%>/update">Update this Character</a>
             <form action="/<%= character.characterid %>/delete" method="POST" style="display:inline;">

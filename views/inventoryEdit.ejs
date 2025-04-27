@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <form action="/<%=character.characterid%>/editinventory" method="post">
+            <% if (locals.items){%>
+                <Table>
+                    <thead>
+                        <th scope="col">ITEM</th>
+                        <th scope="col">TYPE</th>
+                        <th scope="col">DESCRIPTION</th>
+                        <th scope="col">WEIGHT</th>
+                        <th scope="col">QUANTITY</th>
+                    </thead>
+                    <tbody>
+                        <% items.forEach(function(item){ %>
+                            <tr>
+                                <th scope="row"><%=item.itemname%></th>
+                                <td><%=item.itemtype%></td>
+                                <td><%=item.itemdescription%></td>
+                                <td><%=item.weight%>lb</td>
+                                <td><label for="<$=item.id%>"></label><input type="number" name="<%=item.id%>" id="<%=item.id%>" min="0" value="<%=item.quantity%>"/></td>
+                            </tr>
+                            
+                        <%}); %>
+                    </tbody>
+                </Table>
+            <% } %>
+            <button type="submit">SAVE</button>
+        </form>
+
+        <br/>
+        
+            <h3>SEARCH:</h3>
+            <form action="/<%=character.characterid%>/editinventory/search" method="post">
+                <label for="set">Set</label>
+                <select id="set" name="set">
+                    <option></option>
+                <% itemsets.forEach(function(set){ %>
+                    <option value="<%=set.setid%>"><%=set.setname%></option>
+                <%}); %>
+                </select>
+                <label for="itemsearch">Item Name:</label>
+                <input type="text" id="searchtext" name="searchtext"/>
+                <button type="submit">SEARCH</button>
+            </form>
+            <br/>
+
+            <% if (locals.itemsearch){%>
+                <h3>Results:</h3>
+                <Table>
+                    <thead>
+                        <th scope="col">ITEM</th>
+                        <th scope="col">TYPE</th>
+                        <th scope="col">DESCRIPTION</th>
+                        <th scope="col">WEIGHT</th>
+                        <th scope="col">QUANTITY</th>
+                    </thead>
+                    <tbody>
+                        <% itemsearch.forEach(function(item){ %>
+                            <tr>
+                                <th scope="row"><%=item.itemname%></th>
+                                <td><%=item.itemtype%></td>
+                                <td><%=item.itemdescription%></td>
+                                <td><%=item.weight%>lb</td>
+                                <form action="/<%=character.characterid%>/addIntoInventory"><td><label for="<$=item.itemid%>"></label><input type="number" name="<%=item.itemid%>" id="<%=item.itemid%>" min="0"/></td>
+                                <td><button type="submit">Add</button></td></form>
+                            </tr>
+                            
+                        <%}); %>
+                    </tbody>
+                </Table>
+            <% } %>
+
+        <a href="/new">NEW CHARACTER</a>
+        <a href="/itemsets">ITEM SETS</a>
+    </body>
+</html>

@@ -105,10 +105,12 @@ async function addInventoryLine(setID, itemID, quantity, characterID) {
     
 }
 
-//edit inventory line
-async function editInventoryLine(id, quantity, characterID) {
-    await pool.query("UPDATE inventory SET quantity=$2, characterid=$3 WHERE id=$1", 
-        [id, quantity, characterID])    
+//edit inventory TO BE USED AS A MASS EDIT
+async function editInventory( ammendedItems ) {
+    Object.keys(ammendedItems).forEach(async function(key){
+        await pool.query("UPDATE inventory SET quantity=$2 WHERE id=$1", 
+            [Number(key), Number(ammendedItems[key])])    
+    })
 }
 
 //delete inventory line
@@ -118,9 +120,31 @@ async function deleteInventoryLine(id) {
 
 async function getItemTypesInSet(id) {
     const { rows } = await pool.query("SELECT DISTINCT itemtype FROM itemlist WHERE setid=$1", [id] );
-    return rows
+    return rows;
 }
 
+//Return Total Weight of inventory
+async function totalInventoryWeight(characterID) {
+    const { rows } = await pool.query("SELECT SUM(weight * quantity) FROM inventory LEFT JOIN itemlist ON inventory.itemid = itemlist.itemid WHERE characterid = $1", [characterID]);
+    return rows;
+}
+
+//Return items in a search query
+async function itemSearch(query) {
+    const queryArray = []
+    if (query.set){queryArray.push(query.set)};
+    if (query.search){queryArray.push('%'+decodeURIComponent(query.search)+'%')}
+    
+    console.log(queryArray)
+
+    const { rows } = await pool.query(`SELECT * FROM itemlist WHERE 
+        ${query.set?`setid=$1 `:''}
+        ${query.set && query.search ? 'AND ':''}
+        ${query.search?`itemname LIKE ${query.set?'$2':'$1'}`:''}`,queryArray)
+    
+    console.log(rows)
+    return rows;
+}
 
 module.exports = {
     getAllCharacters,
@@ -139,9 +163,11 @@ module.exports = {
     deleteItem,
     getInventorybyCharacter,
     addInventoryLine,
-    editInventoryLine,
+    editInventory,
     deleteInventoryLine,
     getSetById,
     getItemTypesInSet,
-    getItemById
+    getItemById,
+    totalInventoryWeight,
+    itemSearch
 }

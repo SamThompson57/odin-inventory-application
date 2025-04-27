@@ -53,9 +53,11 @@ async function updateCharacterPost(req, res) {
 async function getItemList(req, res) {
     const character = await db.getCharacterById(req.params.id)
     const items = await db.getInventorybyCharacter(req.params.id)
+    const totalInvWeight = await db.totalInventoryWeight(req.params.id)
     res.render("characterInventory",{
         character: character,
-        items: items
+        items: items,
+        totalInvWeight: totalInvWeight[0]
     })
 }
 
@@ -169,6 +171,53 @@ async function deleteItemPost(req, res) {
     res.redirect(`/${req.params.setid}/itemlist`)
 }
 
+//Edit Inventory GET
+async function editInventoryGet(req, res) {
+    // get character current inventory
+    const character = await db.getCharacterById(req.params.id)
+    const items = await db.getInventorybyCharacter(req.params.id)
+    const itemsets = await db.getAllItemSets();
+    // get item list from the search parameters
+    let itemSearch = req.query.set || req.query.search? await db.itemSearch(req.query) : null 
+
+    /*if (req.query.set || req.query.search){
+        itemSearch = await db.itemSearch(req.query)
+    }*/
+
+    
+    
+    res.render("inventoryEdit", {
+        title: `Edit ${character.charactername}'s inventory`,
+        character: character,
+        items: items,
+        itemsets: itemsets,
+        itemsearch: itemSearch
+    })
+}
+
+//Edit Inventory POST
+async function editInventoryPost(req, res) {
+    console.log("Inventory Updated")
+    Object.keys(req.body).forEach(key => {
+        console.log(`Key: ${key}, Value: ${req.body[key]}`)
+    });
+    await db.editInventory(req.body)
+    res.redirect(`/${req.params.id}/inventory`)
+}
+
+async function addAddSingleLineToInv(req, res) {
+    //Form will be submitted with a single Item ID,
+    //Get item getItemById(itemID) 
+    const item = await db.getItemById(Object.keys(req.body)[0])
+    //addInventoryLine(setID, itemID, quantity, characterID)
+    console.log(`adding ${req.body[0]} x ${item.itemname}`)
+    res.redirect(`/${req.params.id}/editinventory`)
+}
+
+async function newSearch(req,res) {
+
+    res.redirect(`/${req.params.id}/editinventory?${req.body.set?`set=${req.body.set}&`:""}${req.body.searchtext?`search=${encodeURIComponent(req.body.searchtext)}`:""}`)
+}
 
 module.exports = {
     characterListGet,
@@ -189,5 +238,9 @@ module.exports = {
     addItemPost,
     editItemGet,
     editItemPost,
-    deleteItemPost
+    deleteItemPost,
+    editInventoryGet,
+    editInventoryPost,
+    addAddSingleLineToInv,
+    newSearch
 }
