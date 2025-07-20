@@ -1,4 +1,5 @@
 const { Client } = require("pg");
+require("dotenv").config();
 const env = process.env;
 
 const SQL = `
@@ -16,8 +17,8 @@ CREATE TABLE IF NOT EXISTS inventory (
   characterid integer
 );
 
-DROP TABLE itemsets;
-DROP TABLE itemlist;
+DROP TABLE IF EXISTS itemsets;
+DROP TABLE IF EXISTS itemlist;
 
 CREATE TABLE IF NOT EXISTS itemsets (
   setid INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -46,7 +47,7 @@ VALUES
 async function main() {
   console.log("seeding...");
   const client = new Client({
-    connectionString: `postgresql://${env.USER}:${env.PASSWORD}@localhost:${env.PORT}/${env.DATABASE}`,
+    connectionString: `postgresql://${env.USER}:${env.PASSWORD}@localhost:${env.POOL_PORT}/${env.DATABASE}`,
   });
   await client.connect();
   await client.query(SQL);
