@@ -1,0 +1,35 @@
+table, th, td {
+    text-align: left;
+    border: 2px solid lightsteelblue;
+    border-collapse: collapse;
+    padding: 3px;
+}
+
+thead {
+    background-color: lightsteelblue;
+}
+
+.characterCard{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border: 3px solid lightsteelblue;
+    max-width: 500px;
+    margin: 10px auto;
+    padding: 20px 20px;
+}
+
+.characterTitle {
+    font-size: 36px;
+    text-align: center;
+    font-weight: 700;
+    grid-column: 1/3;
+}
+
+.pageTitle {
+    text-align: center;
+}
+
+.elementNav{
+    margin: auto;
+    padding: 5px;
+}

@@ -2,6 +2,7 @@
 <html>
     <head>
         <title><%=character.charactername%>'s Inventory</title>
+        <link rel="stylesheet" href="/style.css" type="text/css">
     </head>
     <body>
         <h1><%=character.charactername%>'s Inventory</h1>
@@ -34,7 +35,8 @@
             <a href="/<%=character.characterid%>/editinventory">EDIT ITEMS</a>
             
             <br/>
-            <h3>TOTAL Inventory: <%=totalInvWeight.sum%>lb / MAXIMUM: <%=character.str*15%>lb</h3>
+            <h3>TOTAL: <%=totalInvWeight.sum%>lb / <%=character.str*15%>lb</h3>
+            <h3>Encumberance Effects: <%=weightEffect%></h3>
             
             <a href="/">Back to character list </a>
             <a href="/<%= character.characterid%>/update">Update this Character</a>

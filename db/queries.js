@@ -2,7 +2,7 @@ const pool = require("./pool");
 
 //Get all characters, For the main page
 async function getAllCharacters() {
-    const { rows } = await pool.query("SELECT * FROM characters")
+    const { rows } = await pool.query("SELECT * FROM characters ORDER BY characterid ASC")
     return rows;
 }
 

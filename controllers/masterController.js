@@ -1,4 +1,5 @@
 const db = require("../db/queries");
+const status = require("../public/effects")
 
 //Get Character List
 async function characterListGet(req, res) {
@@ -54,10 +55,13 @@ async function getItemList(req, res) {
     const character = await db.getCharacterById(req.params.id)
     const items = await db.getInventorybyCharacter(req.params.id)
     const totalInvWeight = await db.totalInventoryWeight(req.params.id)
+    const weightEffect = status.weightEffect(totalInvWeight[0].sum, character.str)
+    
     res.render("characterInventory",{
         character: character,
         items: items,
-        totalInvWeight: totalInvWeight[0]
+        totalInvWeight: totalInvWeight[0],
+        weightEffect: weightEffect
     })
 }
 
@@ -199,8 +203,6 @@ async function editInventoryPost(req, res) {
 async function addAddSingleLineToInv(req, res) {
     //Form will be submitted with a single Item ID,
     //Get item getItemById(itemID) 
-    console.log(req.body)
-    console.log(Number(Object.keys(req.body)[0]))
     const item = await db.getItemById(Number(Object.keys(req.body)[0]))
     await db.addInventoryLine(item[0].setid, item[0].itemid, req.body[item[0].itemid], req.params.id)
     res.redirect(`/${req.params.id}/editinventory`)
