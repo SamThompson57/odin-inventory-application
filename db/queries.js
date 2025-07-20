@@ -2,7 +2,10 @@ const pool = require("./pool");
 
 //Get all characters, For the main page
 async function getAllCharacters() {
+    //TODO need to add a collum with the characters inventory weight
     const { rows } = await pool.query("SELECT * FROM characters ORDER BY characterid ASC")
+    //SELECT c.characterid, c.charactername, c.str, SUM(i.weight*inv.quantity) AS totalinventory 
+    
     return rows;
 }
 
